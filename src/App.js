@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
-import UserInput from './components/UserInput'
-import ConnectedUsers from './components/Users'
+import { connect } from 'react-redux'; /* code change */
+import './App.css';
 
 class App extends Component {
+
+  handleOnClick() {
+    this.props.dispatch({
+      type: 'INCREASE_COUNT',
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <UserInput />
-        <ConnectedUsers />
+        <button onClick={() => this.handleOnClick()}>
+          Click
+        </button>
+        <p>{this.props.items.length}</p>
       </div>
     );
   }
-}
+};
 
-export default App;
+// start of code change
+const mapStateToProps = (state) => {
+  return { items: state.items };
+};
+
+export default connect(mapStateToProps)(App);
+// end of code change 
